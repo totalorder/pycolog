@@ -1,5 +1,11 @@
-angular.module('tell', [])
-    .controller('InvoiceController', function() {
+angular.module('tell', ['ngResource'])
+      .service('Logger', function($resource) {
+        return $resource('/tell/api/loggers/:id');
+    }).factory('Entry', function($resource) {
+        return $resource('/tell/api/entries/:id');
+    }).controller('InvoiceController', function($scope, Logger, Entry) {
+        $scope.Logger = Logger;
+        $scope.Entry = Entry;
         this.qty = 1;
         this.cost = 2;
         this.inCurr = 'EUR';
@@ -20,6 +26,9 @@ angular.module('tell', [])
             window.alert("Thanks!");
         };
     }).config(function($interpolateProvider) {
-    $interpolateProvider.startSymbol('[[');
-    $interpolateProvider.endSymbol(']]');
-});
+        $interpolateProvider.startSymbol('[[');
+        $interpolateProvider.endSymbol(']]');
+    }).config(['$resourceProvider', function ($resourceProvider) {
+        // Don't strip trailing slashes from calculated URLs
+        $resourceProvider.defaults.stripTrailingSlashes = false;
+}]);
