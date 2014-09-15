@@ -14,7 +14,7 @@ class Command(BaseCommand):
         server_socket.bind(("0.0.0.0", 8001))
         server_socket.listen(5)
 
-        regex = re.compile(r"(\[(error|warning|info|debug)])")
+        regex = re.compile(r"(\[(error|warning|info|debug)])", re.IGNORECASE)
         while 1:
             print "Listening..."
             client_socket, addr = server_socket.accept()

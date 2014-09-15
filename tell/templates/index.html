@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="1">
+    <title></title>
+</head>
+<body>
+<h1>Logs</h1>
+{% for log in logs %}
+    <div>
+        <h2>{{ log.name }}</h2>
+        {% for entry in log.entries %}
+            <div>{{ entry.data }}</div>
+        {% endfor %}
+    </div>
+{% endfor %}
+</body>
+</html>
