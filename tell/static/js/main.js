@@ -3,28 +3,32 @@ angular.module('tell', ['ngResource'])
         return $resource('/tell/api/loggers/:id');
     }).factory('Entry', function($resource) {
         return $resource('/tell/api/entries/:id');
-    }).controller('InvoiceController', function($scope, Logger, Entry) {
-        $scope.Logger = Logger;
-        $scope.Entry = Entry;
-        this.qty = 1;
-        this.cost = 2;
-        this.inCurr = 'EUR';
-        this.currencies = ['USD', 'EUR', 'CNY'];
-        this.usdToForeignRates = {
-            USD: 1,
-            EUR: 0.74,
-            CNY: 6.09
+    }).controller('LoggerController', function($scope, Logger, Entry) {
+        var originalNewLogger = {
+            'name': "new_logger.log",
+            'ip_address': "127.0.0.1:8002",
+            'regex': "(\\[(error|warning|info|debug)])"
         };
 
-        this.total = function total(outCurr) {
-            return this.convertCurrency(this.qty * this.cost, this.inCurr, outCurr);
+        $scope.new_logger = angular.copy(originalNewLogger);
+        $scope.loggers = Logger.query();
+
+        $scope.addLogger = function() {
+            Logger.save(this.new_logger, function() {
+                Logger.query(function(result) {
+                    $scope.loggers = result;
+                });
+                $scope.new_logger = angular.copy(originalNewLogger);
+            });
         };
-        this.convertCurrency = function convertCurrency(amount, inCurr, outCurr) {
-            return amount * this.usdToForeignRates[outCurr] / this.usdToForeignRates[inCurr];
-        };
-        this.pay = function pay() {
-            window.alert("Thanks!");
-        };
+
+        $scope.removeLogger = function(logger) {
+            Logger.delete({'id': logger.id}, function() {
+                Logger.query(function(result) {
+                    $scope.loggers = result;
+                });
+            });
+        }
     }).config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');
         $interpolateProvider.endSymbol(']]');
