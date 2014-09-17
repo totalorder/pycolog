@@ -1,4 +1,4 @@
-angular.module('tell', ['ngResource'])
+angular.module('tell', ['ngResource', 'ngRoute'])
       .service('Logger', function($resource) {
         return $resource('/tell/api/loggers/:id');
     }).factory('Entry', function($resource) {
@@ -35,4 +35,17 @@ angular.module('tell', ['ngResource'])
     }).config(['$resourceProvider', function ($resourceProvider) {
         // Don't strip trailing slashes from calculated URLs
         $resourceProvider.defaults.stripTrailingSlashes = false;
+    }]).config(['$routeProvider', function($routeProvider) {
+        $routeProvider.
+            when('/loggers', {
+                templateUrl: '/static/tplate/logger_list.html',
+                controller: 'LoggerController'
+            }).
+            when('/loggers/:logger_id', {
+                templateUrl: '/static/tplate/logger_detail.html',
+                controller: 'LoggerController'
+            }).
+            otherwise({
+                redirectTo: '/loggers'
+            });
 }]);

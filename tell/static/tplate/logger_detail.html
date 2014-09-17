@@ -1,0 +1,7 @@
+<h2>
+    [[ logger.name ]]
+    <span class="glyphicon glyphicon-remove" ng-click="removeLogger(logger)"></span>
+</h2>
+<div ng-repeat="entry in logger.getEntries()">
+    Entry: [[ entry.data ]]
+</div>

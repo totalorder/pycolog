@@ -1,0 +1,17 @@
+<div ng-app="tell" ng-controller="LoggerController">
+    <h1>Loggers</h1>
+    <div ng-repeat="logger in loggers">
+        <h2>
+            [[ logger.name ]]
+            <span class="glyphicon glyphicon-remove" ng-click="removeLogger(logger)"></span>
+        </h2>
+        <div ng-repeat="entry in logger.getEntries()">
+            Entry: [[ entry.data ]]
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create new logger</h3>
+        </div>
+    </div>
+</div>
