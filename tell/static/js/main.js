@@ -9,7 +9,7 @@ angular.module('tell', ['ngResource', 'ngRoute'])
             'ip_address': "127.0.0.1:8002",
             'regex': "(\\[(error|warning|info|debug)])"
         };
-
+        $scope.show_create_logger = false;
         $scope.new_logger = angular.copy(originalNewLogger);
         $scope.loggers = Logger.query();
 
@@ -28,6 +28,10 @@ angular.module('tell', ['ngResource', 'ngRoute'])
                     $scope.loggers = result;
                 });
             });
+        };
+
+        $scope.showCreateLogger = function() {
+            $scope.show_create_logger = ! $scope.show_create_logger;
         }
     }).config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');

@@ -9,9 +9,10 @@
             Entry: [[ entry.data ]]
         </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-click="showCreateLogger()">
         <div class="panel-heading">
-            <h3 class="panel-title">Create new logger</h3>
+            <h3 class="panel-title">Create new logger <span class="glyphicon glyphicon-plus pull-right"></span></h3>
+            <div ng-show="show_create_logger" ng-include="'/static/tplate/logger_edit_p.html'">asd</div>
         </div>
     </div>
 </div>
